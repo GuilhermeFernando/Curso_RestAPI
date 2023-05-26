@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+var configuration = app.Configuration;
+ProductRepository.Init(configuration);
 
 app.MapPost("/products", (Produto produto) =>
 {
@@ -39,11 +41,12 @@ app.MapDelete("/products/{code}",([FromRoute] string code) =>
     return Results.Ok();
 });
 
-
+if(app.Environment.IsStaging()){
 app.MapGet("/configuration/database", (IConfiguration configuration)=>
 {
     return Results.Ok($"{configuration["database:Connection"]}/{configuration["database:Port"]}");
 });
+}
 
 app.Run();
 
@@ -51,17 +54,20 @@ public static class ProductRepository
 {
     public static List<Produto> Products { get; set; } =  Products = new List<Produto>();
 
+    public static void Init(IConfiguration configuration)
+    {
+        var product = configuration.GetSection("Products").Get<List<Produto>>();
+        Products = product;
 
+    }
     public static void Add(Produto product)
     {
-
-        Products.Add(product);
-        
+        Products.Add(product);        
     }
 
     public static Produto GetBy(string code )
     {
-        return Products.FirstOrDefault( p => p.Code == code);
+        return Products.FirstOrDefault( p => p.Code == code);        
     }
 
     public static void Remove(Produto produto)

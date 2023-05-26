@@ -50,3 +50,4 @@ E:\Curso_RestAPI\obj\Debug\net7.0\refint\API.dll
 E:\Curso_RestAPI\obj\Debug\net7.0\API.pdb
 E:\Curso_RestAPI\obj\Debug\net7.0\API.genruntimeconfig.cache
 E:\Curso_RestAPI\obj\Debug\net7.0\ref\API.dll
+E:\Curso_RestAPI\bin\Debug\net7.0\appsettings.Staging.json
